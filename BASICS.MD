@@ -29,3 +29,25 @@ While a blue Pixel might look like [200,30,20] a not blue might look like [20,30
 ## Binary Mask
 In order to check an entired frame we create masks for example if we have the values lower_blue = (100, 0, 0)
 upper_blue = (255, 100, 100) everything between lower_blue and upper_blue will be accepted. Displayed as white in our mask everything else is black and not accepted. Therefore we can check a frame where it has blue pixels.
+
+## Object localisation
+1. Create a Mask for a color range 
+2. Find the outlines of connected regions
+3. We draw rectangle around each detected region
+
+A Rectangle is build from 
+- x = horizontal position
+- y = vertical position 
+- w = width
+- h = height
+
+## Hand Tracker
+While the color approce worked for colored objects this wouldnt work for a hand tracker. We need a programm like MediaPipe that detects elements like wrist and fingers to identify a hand. Mediapip uses coordinates between 0 and 1 as in 0 left edge and 1 right edge throught the mathematic formulas:
+pixel_x = int(x * frame_width)
+pixel_y = int(y * frame_height)
+we can convert them into actual frame coordinaten.
+Through the Mediapipe liberay we can use the 21 detected hand marks as a tracking system for refernce view 21-coordinates.png
+Therefore wrist = hand_landmarks.landmark[0] would detected the wrist which we can extracte the position frome:
+print(wrist.x)
+print(wrist.y)
+print(wrist.z)
